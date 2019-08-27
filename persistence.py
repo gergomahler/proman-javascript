@@ -21,6 +21,21 @@ def _read_csv(file_name):
         return formatted_data
 
 
+def generate_id(file_name):
+    db = _read_csv(file_name)
+    _id = len(db) + 1
+    return _id
+
+
+def append_boards(data):
+    with open(BOARDS_FILE, mode='a') as db:
+        writer = csv.DictWriter(db, fieldnames=['id', 'title'], quotechar='"')
+        _id = generate_id(BOARDS_FILE)
+        dict_to_write = {'id': _id,
+                         'title': data}
+        writer.writerow(dict_to_write)
+
+
 def _get_data(data_type, file, force):
     """
     Reads defined type of data from file or cache

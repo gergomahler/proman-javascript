@@ -19,6 +19,7 @@ export let dom = {
     },
     init: function () {
         // This function should run once, when the page is loaded.
+        document.getElementById("createBoard").addEventListener("click", dom.createBoard)
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -43,7 +44,7 @@ export let dom = {
                 ${boardList}
             </ul>
         `;
-
+        document.getElementById("boards").innerText = null;
         this._appendToElement(document.querySelector('#boards'), outerHtml);
     },
     loadCards: function (boardId) {
@@ -54,4 +55,8 @@ export let dom = {
         // it adds necessary event listeners also
     },
     // here comes more features
+    createBoard: function () {
+        let boardTitle = document.getElementById('boardName');
+        dataHandler.createNewBoard(boardTitle, dom.loadBoards)
+    }
 };
