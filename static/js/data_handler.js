@@ -21,12 +21,12 @@ export let dataHandler = {
         // sends the data to the API, and calls callback function
 
         fetch(url, {
-            method: 'POST',
-            credentials: 'same-origin',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
+        method: 'POST', // or 'PUT'
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        }
         })
         .then(callback())
 
