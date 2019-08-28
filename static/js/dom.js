@@ -34,16 +34,16 @@ export let dom = {
         let boardList = '';
 
         for(let board of boards){
-            boardList += `
-                <li>${board.title}</li>
-            `;
+            boardList += `<section class="board">
+                            <div class="board-header"><span class="board-title">${board.title}</span>
+                                <button class="board-add">Add Card</button>
+                                <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                          </section>`
         }
 
-        const outerHtml = `
-            <ul class="board-container">
-                ${boardList}
-            </ul>
-        `;
+        const outerHtml = `<div class="board-container">${boardList}</div>`;
+
         document.getElementById("boards").innerText = null;
         this._appendToElement(document.querySelector('#boards'), outerHtml);
     },
@@ -58,5 +58,6 @@ export let dom = {
     createBoard: function () {
         let boardTitle = document.getElementById('boardName');
         dataHandler.createNewBoard(boardTitle.value, dom.loadBoards);
-    }
+        document.getElementById("boardName").value = null;
+    },
 };
