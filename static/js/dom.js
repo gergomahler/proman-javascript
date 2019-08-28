@@ -46,9 +46,6 @@ export let dom = {
 
         document.getElementById("boards").innerText = null;
         this._appendToElement(document.querySelector('#boards'), outerHtml);
-        document.getElementsByClassName("board-title").forEach(function (element) {
-            element.addEventListener("click", dom.changeBoardTitleToInputField)
-        })
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -63,7 +60,4 @@ export let dom = {
         dataHandler.createNewBoard(boardTitle.value, dom.loadBoards);
         document.getElementById("boardName").value = null;
     },
-    changeBoardTitleToInputField: function () {
-
-    }
 };
