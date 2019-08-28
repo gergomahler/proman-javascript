@@ -53,33 +53,64 @@ export let dom = {
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
-        let cards = '';
-        dom.showCards(cards, boardId);
+        dataHandler.getCardsByBoardId(boardId, function (cards) {
+            dom.showCards(cards, boardId);
+        });
     },
     showCards: function (cards, boardId) {
         // shows the cards of a board
         // it adds necessary event listeners also
-        let columnList = `<div class="board-columns">
-                            <div class="board-column">
+        let newCards = '';
+        let inProgressCards = '';
+        let testingCards = '';
+        let doneCards = '';
+        for (let card of cards) {
+            if (card.status_id === 'new') {
+                newCards += `<div class="card">
+                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-title">${card.title}</div>
+                             </div>`
+            } else if (card.status_id === 'in progress') {
+                inProgressCards += `<div class="card">
+                                    <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                                    <div class="card-title">${card.title}</div>
+                                    </div>`
+            } else if (card.status_id === 'testing') {
+                testingCards += `<div class="card">
+                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-title">${card.title}</div>
+                             </div>`
+            } else if (card.status_id === 'done') {
+                doneCards += `<div class="card">
+                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-title">${card.title}</div>
+                             </div>`
+            }
+        }
+        let newColumn = `<div class="board-column">
                                 <div class="board-column-title">New</div>
-                                <div class="board-column-content"></div>
-                            </div>
-                            <div class="board-column">
-                                <div class="board-column-title">In Progress</div>
-                                <div class="board-column-content"></div>
-                            </div>
-                            <div class="board-column">
+                                <div class="board-column-content">${newCards}</div>
+                         </div>`;
+        let inProgressColumn = `<div class="board-column">
+                                <div class="board-column-title">In progress</div>
+                                <div class="board-column-content">${inProgressCards}</div>
+                            </div>`;
+        let testingColumn = `<div class="board-column">
                                 <div class="board-column-title">Testing</div>
-                                <div class="board-column-content"></div>
-                            </div>
-                            <div class="board-column">
+                                <div class="board-column-content">${testingCards}</div>
+                            </div>`;
+        let doneColumn = `<div class="board-column">
                                 <div class="board-column-title">Done</div>
-                                <div class="board-column-content"></div>
-                            </div>
-                          </div>`;
-        columnList.toString();
+                                <div class="board-column-content">${doneCards}</div>
+                            </div>`;
 
-        this._appendToElement(document.getElementById(boardId), columnList);
+        let outerHtml = `<div class="board-columns">
+                            ${newColumn}
+                            ${inProgressColumn}
+                            ${testingColumn}
+                            ${doneColumn}
+                          </div>`;
+        this._appendToElement(document.getElementById(boardId), outerHtml);
 
     },
     // here comes more features
