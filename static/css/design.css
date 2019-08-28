@@ -32,14 +32,13 @@ button{
     padding: 4px 10px;
 }
 
-.wrapper{
-    text-align: center;
+.board-container{
+max-width: 960px;
+margin: 0 auto;
 }
 
-
-.board-container{
-    max-width: 960px;
-    margin: 0 auto;
+.addBoardBtn{
+    margin: 20px;
 }
 
 section.board{

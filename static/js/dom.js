@@ -19,7 +19,7 @@ export let dom = {
     },
     init: function () {
         // This function should run once, when the page is loaded.
-        document.getElementById("createBoard").addEventListener("click", dom.createBoard)
+        document.getElementById("createBoard").addEventListener("click", dom.createBoard);
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -34,7 +34,7 @@ export let dom = {
         let boardList = '';
 
         for(let board of boards){
-            boardList += `<section class="board">
+            boardList += `<section class="board" id="${board.id}">
                             <div class="board-header"><span class="board-title">${board.title}</span>
                                 <button class="board-add">Add Card</button>
                                 <button class="board-toggle"><i class="fas fa-chevron-down"></i></button>
@@ -46,6 +46,9 @@ export let dom = {
 
         document.getElementById("boards").innerText = null;
         this._appendToElement(document.querySelector('#boards'), outerHtml);
+        document.getElementsByClassName("board-title").forEach(function (element) {
+            element.addEventListener("click", dom.changeBoardTitleToInputField)
+        })
     },
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
@@ -60,4 +63,7 @@ export let dom = {
         dataHandler.createNewBoard(boardTitle.value, dom.loadBoards);
         document.getElementById("boardName").value = null;
     },
+    changeBoardTitleToInputField: function () {
+
+    }
 };
