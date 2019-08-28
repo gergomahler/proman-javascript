@@ -48,7 +48,7 @@ export let dom = {
         this._appendToElement(document.querySelector('#boards'), outerHtml);
          let elements = document.getElementsByClassName('board-toggle');
          for (let element of elements) {
-            element.addEventListener('click', dom.boardToggle);
+            element.addEventListener("click", dom.boardToggle);
         }
     },
     loadCards: function (boardId) {
@@ -90,12 +90,22 @@ export let dom = {
     },
     boardToggle: function (event) {
         let boardToggleButton = event.target;
-        let boardId = boardToggleButton.dataset.boardId;
-        if (boardToggleButton.classList.contains('fa-chevron-down')) {
-            boardToggleButton.classList.replace('fa-chevron-down', 'fa-chevron-up');
-        } else {
-            boardToggleButton.classList.replace('fa-chevron-up', 'fa-chevron-down');
+        if (boardToggleButton.classList.contains('fas')) {
+            boardToggleButton = boardToggleButton.parentElement;
         }
-        dom.loadCards(boardId);
+
+        let boardId = boardToggleButton.dataset.boardId;
+
+        if (boardToggleButton.firstChild.classList.contains('fa-chevron-down')) {
+            boardToggleButton.firstChild.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            dom.loadCards(boardId);
+        } else {
+            boardToggleButton.firstChild.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            dom.hideCards(boardId);
+        }
+    },
+    hideCards: function (boardId) {
+        let board = document.getElementById(boardId);
+        board.getElementsByClassName('board-columns')[0].remove();
     }
 };
