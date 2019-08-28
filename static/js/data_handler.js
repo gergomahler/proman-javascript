@@ -28,7 +28,11 @@ export let dataHandler = {
           'Content-Type': 'application/json'
         }
         })
-        .then(callback())
+        .then(response => {
+            if (response.status === 200) {
+                callback();
+            }
+        });
 
     },
     init: function () {

@@ -58,5 +58,6 @@ export let dom = {
     createBoard: function () {
         let boardTitle = document.getElementById('boardName');
         dataHandler.createNewBoard(boardTitle.value, dom.loadBoards);
+        document.getElementById('boardName').value = null;
     }
 };

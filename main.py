@@ -37,7 +37,7 @@ def get_cards_for_board(board_id: int):
 def create_table():
     data = request.json
     data_handler.create_table(data)
-    return 'ok'
+    return app.make_response('saved')
 
 
 def main():
