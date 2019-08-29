@@ -33,9 +33,9 @@ export let dom = {
 
         let boardList = '';
 
-        for(let board of boards){
+        for (let board of boards) {
             boardList += `<section class="board" id="${board.id}">
-                            <div class="board-header"><span class="board-title">${board.title}</span>
+                            <div class="board-header"><span contenteditable="true" class="board-title">${board.title}</span>
                                 <button class="board-add">Add Card</button>
                                 <button class="board-toggle" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                             </div>
@@ -46,11 +46,17 @@ export let dom = {
 
         document.getElementById("boards").innerText = null;
         this._appendToElement(document.querySelector('#boards'), outerHtml);
-         let elements = document.getElementsByClassName('board-toggle');
-         for (let element of elements) {
+        let elements = document.getElementsByClassName('board-toggle');
+        let titles = document.getElementsByClassName('board-title');
+
+        for (let element of elements) {
             element.addEventListener("click", dom.boardToggle);
         }
+        for (let title of titles) {
+            element.addEventListener("click", dom.changeBoardTitleToInputField);
+        }
     },
+
     loadCards: function (boardId) {
         // retrieves cards and makes showCards called
         dataHandler.getCardsByBoardId(boardId, function (cards) {
