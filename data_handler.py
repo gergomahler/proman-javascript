@@ -32,3 +32,7 @@ def get_cards_for_board(board_id):
 
 def create_table(data):
     persistence.append_boards(data)
+
+
+def create_card(board_id, title):
+    persistence.append_cards(board_id, title)

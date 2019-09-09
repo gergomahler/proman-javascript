@@ -40,6 +40,15 @@ def create_table():
     return app.make_response('saved')
 
 
+@app.route("/create-card", methods=['POST'])
+def create_card():
+    data = request.json
+    card_title = data['cardTitle']
+    board_id = data['boardId']
+    data_handler.create_card(board_id, card_title)
+    return app.make_response('saved')
+
+
 def main():
     app.run(debug=True)
 

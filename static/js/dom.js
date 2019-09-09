@@ -20,6 +20,7 @@ export let dom = {
     init: function () {
         // This function should run once, when the page is loaded.
         document.getElementById("createBoard").addEventListener("click", dom.createBoard);
+        this.addEventListenerToAddCardButton()
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -35,8 +36,8 @@ export let dom = {
 
         for (let board of boards) {
             boardList += `<section class="board" id="${board.id}">
-                            <div class="board-header"><span contenteditable="true" class="board-title">${board.title}</span>
-                                <button class="board-add">Add Card</button>
+                            <div class="board-header"><span class="board-title">${board.title}</span>
+                                <button class="board-add" data-board-id="${board.id}" data-toggle="modal" data-target="#addCard">Add Card</button>
                                 <button class="board-toggle" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                             </div>
                           </section>`
@@ -53,7 +54,15 @@ export let dom = {
             element.addEventListener("click", dom.boardToggle);
         }
         for (let title of titles) {
-            element.addEventListener("click", dom.changeBoardTitleToInputField);
+            title.addEventListener("click", dom.changeBoardTitleToInputField);
+        }
+    },
+
+
+    addEventListenerToAddCardButton: function () {
+        let addCardBtns = document.getElementsByClassName('addCardBtn');
+        for (let addCardBtn of addCardBtns) {
+            addCardBtn.addEventListener('click', dom.createCard);
         }
     },
 
@@ -144,5 +153,13 @@ export let dom = {
     hideCards: function (boardId) {
         let board = document.getElementById(boardId);
         board.getElementsByClassName('board-columns')[0].remove();
+    },
+    createCard: function (event) {
+        let addCardBtn = event.target;
+        addCardBtn = addCardBtn.parentElement;
+        let boardId = addCardBtn.dataset.boardId;
+        let cardTitle = document.getElementById('cardName');
+        dataHandler.createNewCard(cardTitle.value, boardId, 0, dom.loadBoards);
+        document.getElementById('cardName').value = null
     }
 };

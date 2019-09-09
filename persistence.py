@@ -28,12 +28,35 @@ def generate_id(file_name):
     return new_id
 
 
+def get_card_order(board_id, status_id):
+    db = _read_csv(CARDS_FILE)
+    order = []
+    for i in db:
+        if i['board_id'] == board_id and i['status_id'] == status_id:
+            order.append(i['order'])
+    new_order = max(order) + 1
+    return new_order
+
+
 def append_boards(data):
     with open(BOARDS_FILE, mode='a') as db:
         writer = csv.DictWriter(db, fieldnames=['id', 'title'], quotechar='"')
         _id = generate_id(BOARDS_FILE)
         dict_to_write = {'id': _id,
                          'title': data}
+        writer.writerow(dict_to_write)
+
+
+def append_cards(board_id, title):
+    with open(CARDS_FILE, mode='a') as db:
+        status_id = 0
+        writer = csv.DictWriter(db, fieldnames=['id', 'board_id', 'title', 'status_id', 'order'], quotechar='"')
+        _id = generate_id(CARDS_FILE)
+        dict_to_write = {'id': _id,
+                         'board_id': board_id,
+                         'title': title,
+                         'status_id': status_id,
+                         'order': get_card_order(board_id, status_id)}
         writer.writerow(dict_to_write)
 
 
