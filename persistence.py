@@ -23,8 +23,9 @@ def _read_csv(file_name):
 
 def generate_id(file_name):
     db = _read_csv(file_name)
-    _id = len(db) + 1
-    return _id
+    ids = [i['id'] for i in db]
+    new_id = int(max(ids)) + 1
+    return new_id
 
 
 def append_boards(data):
