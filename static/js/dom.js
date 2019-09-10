@@ -37,6 +37,7 @@ export let dom = {
             boardList += `<section class="board" id="${board.id}">
                             <div class="board-header"><span class="board-title">${board.title}</span>
                                 <button class="board-add" data-board-id="${board.id}" data-toggle="modal" data-target="#addCard">Add Card</button>
+                                <button class="board-delete" data-board-id="${board.id}"><i class="fas fa-trash"></i></button>
                                 <button class="board-toggle" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                             </div>
                           </section>`
@@ -48,6 +49,7 @@ export let dom = {
         this._appendToElement(document.querySelector('#boards'), outerHtml);
         let elements = document.getElementsByClassName('board-toggle');
         let titles = document.getElementsByClassName('board-title');
+        let delIcons = document.getElementsByClassName('board-delete');
 
         for (let element of elements) {
             element.addEventListener("click", dom.boardToggle);
@@ -55,7 +57,11 @@ export let dom = {
         // for (let title of titles) {
         //     title.addEventListener("click", dom.changeBoardTitleToInputField);
         // }
+        for (let delIcon of delIcons) {
+            delIcon.addEventListener("click", dom.deleteBoard)
+        }
         this.addEventListenerToAddCardButton()
+
     },
 
     addEventListenerToAddCardButton: function () {
@@ -173,5 +179,15 @@ export let dom = {
     handleCardDelete: function (event) {
         const cardId = event.target.dataset.cardId;
         dataHandler.deleteCard(cardId, dom.loadBoards());
+        document.getElementById('cardName').value = null
+    },
+
+    deleteBoard: function (event) {
+        let deleteButton = event.target;
+        if (deleteButton.classList.contains('fas')) {
+            deleteButton = deleteButton.parentElement;
+        }
+        let boardId = deleteButton.dataset.boardId;
+        dataHandler.deleteBoard(boardId, dom.loadBoards)
     }
 };

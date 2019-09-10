@@ -97,5 +97,9 @@ export let dataHandler = {
     // here comes more features
     deleteCard: function (cardId, callback) {
         this._api_delete('/delete-card', cardId, callback);
+    },
+
+    deleteBoard: function (boardId, callback) {
+        this._api_post('/delete-board', boardId , callback)
     }
 };
