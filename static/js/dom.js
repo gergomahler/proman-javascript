@@ -1,5 +1,5 @@
 // It uses data_handler.js to visualize elements
-import { dataHandler } from "./data_handler.js";
+import {dataHandler} from "./data_handler.js";
 
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
@@ -36,7 +36,7 @@ export let dom = {
         for (let board of boards) {
             boardList += `<section class="board" id="${board.id}">
                             <div class="board-header"><span class="board-title">${board.title}</span>
-                                <button class="board-add" id="${board.id}" data-toggle="modal" data-target="#addCard">Add Card</button>
+                                <button class="board-add" data-board-id="${board.id}" data-toggle="modal" data-target="#addCard">Add Card</button>
                                 <button class="board-toggle" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                             </div>
                           </section>`
@@ -52,9 +52,9 @@ export let dom = {
         for (let element of elements) {
             element.addEventListener("click", dom.boardToggle);
         }
-        for (let title of titles) {
-            title.addEventListener("click", dom.changeBoardTitleToInputField);
-        }
+        // for (let title of titles) {
+        //     title.addEventListener("click", dom.changeBoardTitleToInputField);
+        // }
         this.addEventListenerToAddCardButton()
     },
 
@@ -156,12 +156,11 @@ export let dom = {
     },
     getBoardIdForAddCardButton: function (event) {
         let addCardBtn = event.target;
-        let boardId = addCardBtn.dataset.boardId;
-        return boardId;
+         document.getElementById('createCard').dataset.boardId = addCardBtn.dataset.boardId;
     },
 
-    createCard: function () {
-        let boardId = dom.getBoardIdForAddCardButton();
+    createCard: function (event) {
+        let boardId = event.target.dataset.boardId;
         let cardTitle = document.getElementById('cardName').value;
         dataHandler.createNewCard(cardTitle, boardId, 0, dom.loadBoards);
         document.getElementById('cardName').value = null
