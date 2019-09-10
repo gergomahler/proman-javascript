@@ -25,6 +25,8 @@ def _read_csv(file_name):
 def generate_id(file_name):
     db = _read_csv(file_name)
     ids = [int(i['id']) for i in db]
+    if not ids:
+        return 1
     new_id = max(ids) + 1
     return new_id
 
