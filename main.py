@@ -45,7 +45,8 @@ def create_card():
     data = request.json
     card_title = data['cardTitle']
     board_id = data['boardId']
-    data_handler.create_card(board_id, card_title)
+    status_id = data['statusId']
+    data_handler.create_card(board_id, card_title, status_id)
     return app.make_response('saved')
 
 

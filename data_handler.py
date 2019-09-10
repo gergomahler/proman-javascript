@@ -34,5 +34,5 @@ def create_table(data):
     persistence.append_boards(data)
 
 
-def create_card(board_id, title):
-    persistence.append_cards(board_id, title)
+def create_card(board_id, title, status_id):
+    persistence.append_cards(board_id, title, status_id)

@@ -20,7 +20,6 @@ export let dom = {
     init: function () {
         // This function should run once, when the page is loaded.
         document.getElementById("createBoard").addEventListener("click", dom.createBoard);
-        this.addEventListenerToAddCardButton()
     },
     loadBoards: function () {
         // retrieves boards and makes showBoards called
@@ -37,7 +36,7 @@ export let dom = {
         for (let board of boards) {
             boardList += `<section class="board" id="${board.id}">
                             <div class="board-header"><span class="board-title">${board.title}</span>
-                                <button class="board-add" data-board-id="${board.id}" data-toggle="modal" data-target="#addCard">Add Card</button>
+                                <button class="board-add" id="${board.id}" data-toggle="modal" data-target="#addCard">Add Card</button>
                                 <button class="board-toggle" data-board-id="${board.id}"><i class="fas fa-chevron-down"></i></button>
                             </div>
                           </section>`
@@ -56,13 +55,14 @@ export let dom = {
         for (let title of titles) {
             title.addEventListener("click", dom.changeBoardTitleToInputField);
         }
+        this.addEventListenerToAddCardButton()
     },
-
 
     addEventListenerToAddCardButton: function () {
         let addCardBtns = document.getElementsByClassName('board-add');
         for (let addCardBtn of addCardBtns) {
-            addCardBtn.addEventListener('click', dom.createCard);
+            addCardBtn.addEventListener('click', dom.getBoardIdForAddCardButton);
+        document.getElementsByClassName("addCardBtn")[0].addEventListener("click", dom.createCard);
         }
     },
 
@@ -154,9 +154,14 @@ export let dom = {
         let board = document.getElementById(boardId);
         board.getElementsByClassName('board-columns')[0].remove();
     },
-    createCard: function (event) {
+    getBoardIdForAddCardButton: function (event) {
         let addCardBtn = event.target;
         let boardId = addCardBtn.dataset.boardId;
+        return boardId;
+    },
+
+    createCard: function () {
+        let boardId = dom.getBoardIdForAddCardButton();
         let cardTitle = document.getElementById('cardName').value;
         dataHandler.createNewCard(cardTitle, boardId, 0, dom.loadBoards);
         document.getElementById('cardName').value = null

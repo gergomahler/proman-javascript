@@ -47,9 +47,8 @@ def append_boards(data):
         writer.writerow(dict_to_write)
 
 
-def append_cards(board_id, title):
+def append_cards(board_id, title, status_id):
     with open(CARDS_FILE, mode='a') as db:
-        status_id = 0
         writer = csv.DictWriter(db, fieldnames=['id', 'board_id', 'title', 'status_id', 'order'], quotechar='"')
         _id = generate_id(CARDS_FILE)
         dict_to_write = {'id': _id,
