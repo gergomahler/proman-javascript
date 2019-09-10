@@ -132,6 +132,10 @@ export let dom = {
                             ${doneColumn}
                           </div>`;
         this._appendToElement(document.getElementById(boardId), outerHtml);
+        /*let cardTitles = document.getElementsByClassName('card-title')
+        for (let cardTitle of cardTitles) {
+            cardTitle.addEventListener('click', dom.renameCard)
+        }*/
 
     },
     // here comes more features
@@ -179,5 +183,13 @@ export let dom = {
         }
         let boardId = deleteButton.dataset.boardId;
         dataHandler.deleteBoard(boardId, dom.loadBoards)
+    },
+
+    renameCard: function (event) {
+        let cardTitle = event.target;
+        let inputField = document.createElement('input');
+        inputField.type = 'text';
+        inputField.value = cardTitle;
+
     }
 };
