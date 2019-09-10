@@ -55,7 +55,8 @@ export let dom = {
         // for (let title of titles) {
         //     title.addEventListener("click", dom.changeBoardTitleToInputField);
         // }
-        this.addEventListenerToAddCardButton()
+        this.addEventListenerToAddCardButton();
+        this.addEventListenerToBoardTitle();
     },
 
     addEventListenerToAddCardButton: function () {
@@ -164,5 +165,30 @@ export let dom = {
         let cardTitle = document.getElementById('cardName').value;
         dataHandler.createNewCard(cardTitle, boardId, 0, dom.loadBoards);
         document.getElementById('cardName').value = null
+    },
+
+    addEventListenerToBoardTitle: function(){
+        let boardTitles = document.querySelectorAll('.board-title');
+        for (let boardTitle of boardTitles) {
+            boardTitle.addEventListener('click', function(){
+                dom.changeTitle(boardTitle)
+            })
+        }
+    },
+
+    changeTitle: function (boardTitle) {
+        boardTitle.classList.replace('board-title', 'board-title-hidden');
+        let title = boardTitle.innerHTML;
+        let input = document.createElement("input");
+        input.type = "text";
+        input.value = title;
+        input.size = 10;
+        boardTitle.parentNode.insertBefore(input, boardTitle);
+        input.focus();
+        input.onblur = function(){
+            boardTitle.parentNode.removeChild(input);
+            boardTitle.innerHTML = input.value;
+            boardTitle.classList.replace('board-title-hidden', 'board-title');
+        }
     }
 };

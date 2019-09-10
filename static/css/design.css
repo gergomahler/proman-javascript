@@ -59,6 +59,11 @@ section.board{
     display: inline-block;
     font-size: 20px;
 }
+
+.board-title-hidden{
+    display: none;
+}
+
 .board-title, .board-add, .board-toggle{
     display: inline-block;
 }
