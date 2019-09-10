@@ -184,11 +184,19 @@ export let dom = {
         input.value = title;
         input.size = 10;
         boardTitle.parentNode.insertBefore(input, boardTitle);
+        let saveButton = document.createElement("button");
+        saveButton.type = "submit";
+        saveButton.innerHTML = "Save";
+        boardTitle.parentNode.insertBefore(saveButton, boardTitle);
         input.focus();
         input.onblur = function(){
             boardTitle.parentNode.removeChild(input);
-            boardTitle.innerHTML = input.value;
+            boardTitle.parentNode.removeChild(saveButton);
+            let newTitle = input.value;
+            boardTitle.innerHTML = newTitle;
             boardTitle.classList.replace('board-title-hidden', 'board-title');
         }
-    }
+    },
+
+
 };
