@@ -60,7 +60,7 @@ export let dom = {
 
 
     addEventListenerToAddCardButton: function () {
-        let addCardBtns = document.getElementsByClassName('addCardBtn');
+        let addCardBtns = document.getElementsByClassName('board-add');
         for (let addCardBtn of addCardBtns) {
             addCardBtn.addEventListener('click', dom.createCard);
         }
@@ -156,10 +156,9 @@ export let dom = {
     },
     createCard: function (event) {
         let addCardBtn = event.target;
-        addCardBtn = addCardBtn.parentElement;
         let boardId = addCardBtn.dataset.boardId;
-        let cardTitle = document.getElementById('cardName');
-        dataHandler.createNewCard(cardTitle.value, boardId, 0, dom.loadBoards);
+        let cardTitle = document.getElementById('cardName').value;
+        dataHandler.createNewCard(cardTitle, boardId, 0, dom.loadBoards);
         document.getElementById('cardName').value = null
     }
 };
