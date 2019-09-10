@@ -31,9 +31,10 @@ def generate_id(file_name):
 def get_card_order(board_id, status_id):
     db = _read_csv(CARDS_FILE)
     order = []
-    for i in db:
-        if i['board_id'] == board_id and i['status_id'] == status_id:
-            order.append(i['order'])
+    for _id in db:
+        if _id['board_id'] == str(board_id) and _id['status_id'] == str(status_id):
+            order.append(_id['order'])
+    order = [int(num) for num in order]
     new_order = max(order) + 1
     return new_order
 
