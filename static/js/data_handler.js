@@ -76,6 +76,9 @@ export let dataHandler = {
         // creates new card, saves it and calls the callback function with its data
         let data = {'cardTitle': cardTitle, 'boardId': boardId, 'statusId': statusId};
         this._api_post('/create-card', data ,callback)
-    }
+    },
     // here comes more features
+    deleteBoard: function (boardId, callback) {
+        this._api_post('/delete-board', boardId , callback)
+    }
 };
