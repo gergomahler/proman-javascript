@@ -35,6 +35,8 @@ def get_card_order(board_id, status_id):
         if _id['board_id'] == str(board_id) and _id['status_id'] == str(status_id):
             order.append(_id['order'])
     order = [int(num) for num in order]
+    if not order:
+        return 0
     new_order = max(order) + 1
     return new_order
 
