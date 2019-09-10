@@ -50,6 +50,13 @@ def create_card():
     return app.make_response('saved')
 
 
+@app.route("/delete-card", methods=['DELETE'])
+def delete_card():
+    card_id = request.json
+    data_handler.delete_card(card_id)
+    return app.make_response('deleted')
+
+
 def main():
     app.run(debug=True)
 

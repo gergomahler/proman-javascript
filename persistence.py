@@ -1,4 +1,5 @@
 import csv
+import os
 
 STATUSES_FILE = './data/statuses.csv'
 BOARDS_FILE = './data/boards.csv'
@@ -23,8 +24,8 @@ def _read_csv(file_name):
 
 def generate_id(file_name):
     db = _read_csv(file_name)
-    ids = [i['id'] for i in db]
-    new_id = int(max(ids)) + 1
+    ids = [int(i['id']) for i in db]
+    new_id = max(ids) + 1
     return new_id
 
 
@@ -90,3 +91,13 @@ def get_boards(force=False):
 
 def get_cards(force=False):
     return _get_data('cards', CARDS_FILE, force)
+
+
+def delete_card(card_id):
+    with open(CARDS_FILE, 'r') as cards, open('new_file.csv', 'w') as new_file:
+        writer = csv.DictWriter(new_file, fieldnames=['id', 'board_id', 'title', 'status_id', 'order'], quotechar='"')
+        for card in csv.DictReader(cards, fieldnames=['id', 'board_id', 'title', 'status_id', 'order'], quotechar='"'):
+            if card['id'] != card_id:
+                writer.writerow(card)
+    os.remove(CARDS_FILE)
+    os.rename('new_file.csv', CARDS_FILE)

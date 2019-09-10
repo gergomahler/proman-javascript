@@ -35,6 +35,23 @@ export let dataHandler = {
         });
 
     },
+
+    _api_delete: function (url, id, callback) {
+
+        fetch(url, {
+            method: 'DELETE',
+            body: JSON.stringify(id),
+            credentials: "same-origin",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                callback();
+            }
+        })
+    },
+
     init: function () {
 
     },
@@ -76,6 +93,9 @@ export let dataHandler = {
         // creates new card, saves it and calls the callback function with its data
         let data = {'cardTitle': cardTitle, 'boardId': boardId, 'statusId': statusId};
         this._api_post('/create-card', data ,callback)
-    }
+    },
     // here comes more features
+    deleteCard: function (cardId, callback) {
+        this._api_delete('/delete-card', cardId, callback);
+    }
 };

@@ -82,22 +82,22 @@ export let dom = {
         for (let card of cards) {
             if (card.status_id === 'new') {
                 newCards += `<div class="card">
-                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'in progress') {
                 inProgressCards += `<div class="card">
-                                    <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                                    <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                                     <div class="card-title">${card.title}</div>
                                     </div>`
             } else if (card.status_id === 'testing') {
                 testingCards += `<div class="card">
-                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'done') {
                 doneCards += `<div class="card">
-                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
             }
@@ -126,6 +126,10 @@ export let dom = {
                             ${doneColumn}
                           </div>`;
         this._appendToElement(document.getElementById(boardId), outerHtml);
+        let cardDeleteIcons = document.getElementsByClassName('fa-trash-alt');
+        for (let cardDeleteIcon of cardDeleteIcons) {
+            cardDeleteIcon.addEventListener('click', dom.handleCardDelete);
+        }
 
     },
     // here comes more features
@@ -163,6 +167,11 @@ export let dom = {
         let boardId = event.target.dataset.boardId;
         let cardTitle = document.getElementById('cardName').value;
         dataHandler.createNewCard(cardTitle, boardId, 0, dom.loadBoards);
-        document.getElementById('cardName').value = null
+        document.getElementById('cardName').value = null;
+    },
+
+    handleCardDelete: function (event) {
+        const cardId = event.target.dataset.cardId;
+        dataHandler.deleteCard(cardId, dom.loadBoards());
     }
 };

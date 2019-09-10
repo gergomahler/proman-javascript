@@ -36,3 +36,7 @@ def create_table(data):
 
 def create_card(board_id, title, status_id):
     persistence.append_cards(board_id, title, status_id)
+
+
+def delete_card(card_id):
+    persistence.delete_card(card_id)
