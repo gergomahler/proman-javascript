@@ -60,8 +60,9 @@ export let dom = {
         for (let delIcon of delIcons) {
             delIcon.addEventListener("click", dom.deleteBoard)
         }
-        this.addEventListenerToAddCardButton()
 
+        this.addEventListenerToAddCardButton();
+        this.addEventListenerToBoardTitle();
     },
 
     addEventListenerToAddCardButton: function () {
@@ -190,4 +191,38 @@ export let dom = {
         let boardId = deleteButton.dataset.boardId;
         dataHandler.deleteBoard(boardId, dom.loadBoards)
     }
+    },
+
+    addEventListenerToBoardTitle: function(){
+        let boardTitles = document.querySelectorAll('.board-title');
+        for (let boardTitle of boardTitles) {
+            boardTitle.addEventListener('click', function(){
+                dom.changeTitle(boardTitle)
+            })
+        }
+    },
+
+    changeTitle: function (boardTitle) {
+        boardTitle.classList.replace('board-title', 'board-title-hidden');
+        let title = boardTitle.innerHTML;
+        let input = document.createElement("input");
+        input.type = "text";
+        input.value = title;
+        input.size = 10;
+        boardTitle.parentNode.insertBefore(input, boardTitle);
+        let saveButton = document.createElement("button");
+        saveButton.type = "submit";
+        saveButton.innerHTML = "Save";
+        boardTitle.parentNode.insertBefore(saveButton, boardTitle);
+        input.focus();
+        input.onblur = function(){
+            boardTitle.parentNode.removeChild(input);
+            boardTitle.parentNode.removeChild(saveButton);
+            let newTitle = input.value;
+            boardTitle.innerHTML = newTitle;
+            boardTitle.classList.replace('board-title-hidden', 'board-title');
+        }
+    },
+
+
 };

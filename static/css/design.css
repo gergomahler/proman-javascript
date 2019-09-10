@@ -32,6 +32,11 @@ button{
     padding: 4px 10px;
 }
 
+input{
+    margin: 10px 10px;
+    font-size: 20px;
+}
+
 .board-container{
 max-width: 960px;
 margin: 0 auto;
@@ -59,6 +64,11 @@ section.board{
     display: inline-block;
     font-size: 20px;
 }
+
+.board-title-hidden{
+    display: none;
+}
+
 .board-title, .board-add, .board-toggle{
     display: inline-block;
 }
