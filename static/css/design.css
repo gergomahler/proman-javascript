@@ -104,15 +104,6 @@ section.board{
     text-align: center;
 }
 
-.card{
-    position: relative;
-    background: #222;
-    color: #fff;
-    border-radius: var(--border-radius);
-    margin: 4px 0;
-    padding: 4px;
-}
-
 .board-column:nth-of-type(1) .card{
     background: var(--status-1);
 }
@@ -129,6 +120,30 @@ section.board{
     background: var(--status-4);
 }
 
+
+.card-title{
+    padding-right: 16px;
+}
+
+.card{
+    position: relative;
+    background: #222;
+    color: #fff;
+    border-radius: var(--border-radius);
+    margin: 4px 0;
+    padding: 4px;
+}
+
+.card-inactive {
+    position: relative;
+    background: #222;
+    color: #fff;
+    border-radius: var(--border-radius);
+    margin: 4px 0;
+    padding: 4px;
+    opacity: 0.2;
+}
+
 .card-remove{
     display: block;
     position: absolute;
@@ -138,6 +153,14 @@ section.board{
     cursor: pointer;
 }
 
-.card-title{
-    padding-right: 16px;
+.held{
+    border: solid 3px black;
+}
+
+.active {
+    opacity: 1;
+}
+
+.hovered {
+    background: lightgrey;
 }

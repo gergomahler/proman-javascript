@@ -88,22 +88,22 @@ export let dom = {
         let doneCards = '';
         for (let card of cards) {
             if (card.status_id === 'new') {
-                newCards += `<div class="card">
+                newCards += `<div class="card" draggable="true">
                              <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'in progress') {
-                inProgressCards += `<div class="card">
+                inProgressCards += `<div class="card" draggable="true">
                                     <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                                     <div class="card-title">${card.title}</div>
                                     </div>`
             } else if (card.status_id === 'testing') {
-                testingCards += `<div class="card">
+                testingCards += `<div class="card" draggable="true">
                              <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'done') {
-                doneCards += `<div class="card">
+                doneCards += `<div class="card" draggable="true">
                              <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
@@ -137,6 +137,7 @@ export let dom = {
         for (let cardDeleteIcon of cardDeleteIcons) {
             cardDeleteIcon.addEventListener('click', dom.handleCardDelete);
         }
+        this.dragAndDrop();
 
     },
     // here comes more features
@@ -236,5 +237,48 @@ export let dom = {
         saveButton.remove();
         boardTitle.classList.replace('board-title-hidden', 'board-title');
         dataHandler.updateBoardTitle(newTitle, boardId, dom.loadBoards);
+    },
+
+    dragAndDrop: function(){
+        const cards = document.querySelectorAll('.card');
+        const columns = document.querySelectorAll('.board-column');
+        for (const card of cards) {
+            card.addEventListener('dragstart', dom.dragStart);
+            card.addEventListener('dragend', dom.dragEnd);
         }
+
+        for (const column of columns){
+            column.addEventListener('dragover', dom.dragOver);
+            column.addEventListener('dragenter', dom.dragEnter);
+            column.addEventListener('dragleave', dom.dragLeave);
+            column.addEventListener('drop', dom.drop);
+        }
+    },
+
+    dragStart: function (){
+        this.className += ' held';
+        setTimeout(() => (this.className = 'card-inactive'), 0);
+    },
+
+    dragEnd: function (){
+        this.className = 'card-remove';
+    },
+
+    dragOver: function (e){
+        e.preventDefault();
+    },
+
+    dragEnter: function (e){
+        e.preventDefault();
+        this.className += ' hovered';
+    },
+
+    dragLeave: function (){
+        this.className = 'board-column';
+    },
+
+    drop: function(card) {
+        this.append(card);
+        this.className = 'board-column';
+    },
 };
