@@ -49,3 +49,7 @@ def delete_board(board_id):
 
 def update_board_title(board_id, new_title):
     persistence.update_board_title(board_id, new_title)
+
+
+def update_card_title(card_id, card_title):
+    persistence.update_card_name(card_id, card_title)
