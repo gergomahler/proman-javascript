@@ -190,7 +190,7 @@ export let dom = {
         }
         let boardId = deleteButton.dataset.boardId;
         dataHandler.deleteBoard(boardId, dom.loadBoards)
-    }
+
     },
 
     addEventListenerToBoardTitle: function(){
