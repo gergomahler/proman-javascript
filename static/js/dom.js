@@ -89,22 +89,22 @@ export let dom = {
         for (let card of cards) {
             if (card.status_id === 'new') {
                 newCards += `<div class="card">
-                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'in progress') {
                 inProgressCards += `<div class="card">
-                                    <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                                    <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                                     <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                                     </div>`
             } else if (card.status_id === 'testing') {
                 testingCards += `<div class="card">
-                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'done') {
                 doneCards += `<div class="card">
-                             <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
+                             <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                              </div>`
             }
@@ -240,14 +240,13 @@ export let dom = {
         saveButton.remove();
         boardTitle.classList.replace('board-title-hidden', 'board-title');
         dataHandler.updateBoardTitle(newTitle, boardId, dom.loadBoards);
-        }
     },
 
     getOriginalCardTitle: function (event) {
         let cardTitle = event.target;
         let cardId = cardTitle.dataset.cardId;
         let originalTitle = cardTitle.innerHTML;
-        dom.createCardTitleInputField(event, cardId, originalTitle)
+        dom.createCardTitleInputField(event, cardId, originalTitle);
     },
 
     createCardTitleInputField: function (event, cardId, originalTitle) {
@@ -266,7 +265,7 @@ export let dom = {
         cardTitle.parentNode.insertBefore(saveButton, cardTitle);
         input.focus();
         saveButton.addEventListener('click',function () {
-            dom.overwriteCardTitle(event, cardId, cardTitle)
+            dom.overwriteCardTitle(event, cardId, cardTitle);
         });
     },
 
@@ -279,5 +278,5 @@ export let dom = {
         saveButton.remove();
         cardTitle.classList.replace('card-title-hidden', 'card-title');
         dataHandler.renameCard(cardId, newTitle, dom.loadBoards);
-        }
+    }
 };
