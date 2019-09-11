@@ -24,8 +24,10 @@ def _read_csv(file_name):
 
 def generate_id(file_name):
     db = _read_csv(file_name)
-    ids = [i['id'] for i in db]
-    new_id = int(max(ids)) + 1
+    ids = [int(i['id']) for i in db]
+    if not ids:
+        return 1
+    new_id = max(ids) + 1
     return new_id
 
 
@@ -97,7 +99,6 @@ def update_card_name(card_id, card_title):
                 writer.writerow(row)
     os.remove(CARDS_FILE)
     os.rename('new.csv', CARDS_FILE)
-
 
 
 def _get_data(data_type, file, force):

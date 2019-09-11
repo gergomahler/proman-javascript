@@ -134,7 +134,7 @@ export let dom = {
         this._appendToElement(document.getElementById(boardId), outerHtml);
         let cardTitles = document.getElementsByClassName('card-title');
         for (let cardTitle of cardTitles) {
-            cardTitle.addEventListener('click', dom.renameCard)
+            cardTitle.addEventListener('click', dom.getOriginalCardTitle)
         }
 
     },
@@ -185,24 +185,41 @@ export let dom = {
         dataHandler.deleteBoard(boardId, dom.loadBoards)
     },
 
-    renameCard: function (event) {
-        let cardName = event.target;
-        let oldCardTitle = cardName.innerText;
-        cardName.classList.replace('card-title', 'card-title-hidden');
-        let inputField = document.createElement('input');
-        inputField.type = "text";
-        inputField.value = oldCardTitle;
-        cardName.parentNode.insertBefore(inputField, oldCardTitle);
+    getOriginalCardTitle: function (event) {
+        let cardTitle = event.target;
+        let cardId = cardTitle.dataset.cardId;
+        let originalTitle = cardTitle.innerHTML;
+        dom.createCardTitleInputField(event, cardId, originalTitle)
+    },
+
+    createCardTitleInputField: function(event, cardId, originalTitle) {
+        let cardTitle = event.target;
+        cardTitle.classList.replace('card-title', 'card-title-hidden');
+        let input = document.createElement("input");
+        input.type = "text";
+        input.value = originalTitle;
+        input.size = 10;
+        cardTitle.parentNode.insertBefore(input, cardTitle);
         let saveButton = document.createElement("button");
         saveButton.type = "submit";
+        saveButton.setAttribute("class", "save-button");
+        saveButton.setAttribute("data-card-id", cardId);
         saveButton.innerHTML = "Save";
-        inputField.focus();
-        inputField.onblur = function () {
-            cardName.parentNode.removeChild(inputField);
-            cardName.parentNode.removeChild(saveButton);
-            let newTitle = inputField.value;
-            cardName.innerHTML = newTitle;
-            cardName.classList.replace('card-title-hidden', 'card-title')
+        cardTitle.parentNode.insertBefore(saveButton, cardTitle);
+        input.focus();
+        saveButton.addEventListener('click',function () {
+            dom.overwriteTitle(event, cardId, cardTitle)
+        })
+    },
+
+    overwriteTitle: function (event, cardId, cardTitle) {
+        let input = cardTitle.parentNode.querySelector('input');
+        let saveButton = cardTitle.parentNode.querySelector('.save-button');
+        let newTitle = input.value;
+        cardTitle.innerHTML = newTitle;
+        input.remove();
+        saveButton.remove();
+        cardTitle.classList.replace('card-title-hidden', 'card-title');
+        dataHandler.renameCard(cardId, newTitle, dom.loadBoards);
         }
-    }
 };
