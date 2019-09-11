@@ -64,6 +64,15 @@ def delete_board():
     return app.make_response('saved')
 
 
+@app.route("/update-board", methods=['UPDATE'])
+def update_board():
+    data = request.json
+    board_id = data['board_id']
+    new_title = data['new_title']
+    data_handler.update_board_title(board_id, new_title)
+    return app.make_response('updated')
+
+
 def main():
     app.run(debug=True)
 

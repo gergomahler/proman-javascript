@@ -34,7 +34,7 @@ export let dom = {
         let boardList = '';
 
         for (let board of boards) {
-            boardList += `<section class="board" id="${board.id}">
+            boardList += `<section class="board" id="${board.id}" data-id="${board.id}">
                             <div class="board-header"><span class="board-title">${board.title}</span>
                                 <button class="board-add" data-board-id="${board.id}" data-toggle="modal" data-target="#addCard">Add Card</button>
                                 <button class="board-delete" data-board-id="${board.id}"><i class="fas fa-trash"></i></button>
@@ -196,33 +196,49 @@ export let dom = {
     addEventListenerToBoardTitle: function(){
         let boardTitles = document.querySelectorAll('.board-title');
         for (let boardTitle of boardTitles) {
-            boardTitle.addEventListener('click', function(){
-                dom.changeTitle(boardTitle)
-            })
+            boardTitle.addEventListener('click', dom.getOriginalTitle)
         }
     },
 
-    changeTitle: function (boardTitle) {
+    getOriginalTitle: function (event) {
+        let boardTitle = event.target;
+        let boardId = boardTitle.parentElement.parentElement.dataset.id;
+        let originalTitle = boardTitle.innerHTML;
+        dom.createInputField(event, boardId, originalTitle)
+    },
+
+    createInputField: function(event, boardId, originalTitle) {
+        let boardTitle = event.target;
         boardTitle.classList.replace('board-title', 'board-title-hidden');
-        let title = boardTitle.innerHTML;
         let input = document.createElement("input");
         input.type = "text";
-        input.value = title;
+        input.value = originalTitle;
         input.size = 10;
         boardTitle.parentNode.insertBefore(input, boardTitle);
         let saveButton = document.createElement("button");
         saveButton.type = "submit";
+        saveButton.setAttribute("class", "save-button");
+        saveButton.setAttribute("data-board-id", boardId);
         saveButton.innerHTML = "Save";
         boardTitle.parentNode.insertBefore(saveButton, boardTitle);
         input.focus();
-        input.onblur = function(){
+        dom.overwriteTitle(event, boardId)
+    },
+
+    overwriteTitle: function (event, boardId) {
+        let boardTitle = event.target;
+        let input = boardTitle.parentNode.querySelector('input');
+        let saveButton = boardTitle.parentNode.querySelector('.save-button');
+        input.onblur = function() {
             boardTitle.parentNode.removeChild(input);
             boardTitle.parentNode.removeChild(saveButton);
             let newTitle = input.value;
             boardTitle.innerHTML = newTitle;
             boardTitle.classList.replace('board-title-hidden', 'board-title');
+            saveButton.addEventListener('click', function () {
+                console.log('jjjj');
+                dataHandler.updateBoardTitle(newTitle, boardId, dom.loadBoards)
+            });
         }
-    },
-
-
+    }
 };

@@ -52,6 +52,22 @@ export let dataHandler = {
         })
     },
 
+    _api_update: function (url, data, callback) {
+
+        fetch(url, {
+            method: 'UPDATE',
+            body: JSON.stringify(data),
+            credentials: "same-origin",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                callback();
+            }
+        })
+    },
+
     init: function () {
 
     },
@@ -101,5 +117,10 @@ export let dataHandler = {
 
     deleteBoard: function (boardId, callback) {
         this._api_post('/delete-board', boardId , callback)
+    },
+
+    updateBoardTitle: function (newTitle, boardId, callback) {
+        let data = {'new_title': newTitle, 'board_id': boardId};
+        this._api_update('/update-board', data, callback)
     }
 };

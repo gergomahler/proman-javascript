@@ -87,6 +87,20 @@ def delete_board_by_board_id(board_id):
     os.rename('new.csv', BOARDS_FILE)
 
 
+def update_board_title(board_id, new_title):
+    with open(BOARDS_FILE, 'r') as db, open('new.csv', 'w') as newdb:
+        columns = ['id', 'title']
+        writer = csv.DictWriter(newdb, columns)
+        for row in csv.DictReader(db, columns):
+            if row['id'] != board_id:
+                writer.writerow(row)
+            else:
+                row['title'] = new_title
+                writer.writerow(row)
+    os.remove(BOARDS_FILE)
+    os.rename('new.csv', BOARDS_FILE)
+
+
 def _get_data(data_type, file, force):
     """
     Reads defined type of data from file or cache
