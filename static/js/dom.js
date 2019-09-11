@@ -222,23 +222,19 @@ export let dom = {
         saveButton.innerHTML = "Save";
         boardTitle.parentNode.insertBefore(saveButton, boardTitle);
         input.focus();
-        dom.overwriteTitle(event, boardId)
+        saveButton.addEventListener('click',function () {
+            dom.overwriteTitle(event, boardId, boardTitle)
+        })
     },
 
-    overwriteTitle: function (event, boardId) {
-        let boardTitle = event.target;
+    overwriteTitle: function (event, boardId, boardTitle) {
         let input = boardTitle.parentNode.querySelector('input');
         let saveButton = boardTitle.parentNode.querySelector('.save-button');
-        input.onblur = function() {
-            boardTitle.parentNode.removeChild(input);
-            boardTitle.parentNode.removeChild(saveButton);
-            let newTitle = input.value;
-            boardTitle.innerHTML = newTitle;
-            boardTitle.classList.replace('board-title-hidden', 'board-title');
-            saveButton.addEventListener('click', function () {
-                console.log('jjjj');
-                dataHandler.updateBoardTitle(newTitle, boardId, dom.loadBoards)
-            });
+        let newTitle = input.value;
+        boardTitle.innerHTML = newTitle;
+        input.remove();
+        saveButton.remove();
+        boardTitle.classList.replace('board-title-hidden', 'board-title');
+        dataHandler.updateBoardTitle(newTitle, boardId, dom.loadBoards);
         }
-    }
 };
