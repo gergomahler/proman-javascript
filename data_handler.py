@@ -41,3 +41,7 @@ def create_card(board_id, title, status_id):
 def delete_board(board_id):
     persistence.delete_cards_by_board_id(board_id)
     persistence.delete_board_by_board_id(board_id)
+
+
+def update_card_title(card_id, card_title):
+    persistence.update_card_name(card_id, card_title)

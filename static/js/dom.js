@@ -89,22 +89,22 @@ export let dom = {
             if (card.status_id === 'new') {
                 newCards += `<div class="card">
                              <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                             <div class="card-title">${card.title}</div>
+                             <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'in progress') {
                 inProgressCards += `<div class="card">
                                     <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                                    <div class="card-title">${card.title}</div>
+                                    <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                                     </div>`
             } else if (card.status_id === 'testing') {
                 testingCards += `<div class="card">
                              <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                             <div class="card-title">${card.title}</div>
+                             <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'done') {
                 doneCards += `<div class="card">
                              <div class="card-remove"><i class="fas fa-trash-alt"></i></div>
-                             <div class="card-title">${card.title}</div>
+                             <div class="card-title" data-card-id="${card.id}">${card.title}</div>
                              </div>`
             }
         }
@@ -132,10 +132,10 @@ export let dom = {
                             ${doneColumn}
                           </div>`;
         this._appendToElement(document.getElementById(boardId), outerHtml);
-        /*let cardTitles = document.getElementsByClassName('card-title')
+        let cardTitles = document.getElementsByClassName('card-title');
         for (let cardTitle of cardTitles) {
             cardTitle.addEventListener('click', dom.renameCard)
-        }*/
+        }
 
     },
     // here comes more features
@@ -186,10 +186,23 @@ export let dom = {
     },
 
     renameCard: function (event) {
-        let cardTitle = event.target;
+        let cardName = event.target;
+        let oldCardTitle = cardName.innerText;
+        cardName.classList.replace('card-title', 'card-title-hidden');
         let inputField = document.createElement('input');
-        inputField.type = 'text';
-        inputField.value = cardTitle;
-
+        inputField.type = "text";
+        inputField.value = oldCardTitle;
+        cardName.parentNode.insertBefore(inputField, oldCardTitle);
+        let saveButton = document.createElement("button");
+        saveButton.type = "submit";
+        saveButton.innerHTML = "Save";
+        inputField.focus();
+        inputField.onblur = function () {
+            cardName.parentNode.removeChild(inputField);
+            cardName.parentNode.removeChild(saveButton);
+            let newTitle = inputField.value;
+            cardName.innerHTML = newTitle;
+            cardName.classList.replace('card-title-hidden', 'card-title')
+        }
     }
 };
