@@ -122,5 +122,9 @@ export let dataHandler = {
     updateBoardTitle: function (newTitle, boardId, callback) {
         let data = {'new_title': newTitle, 'board_id': boardId};
         this._api_update('/update-board', data, callback)
+    },
+    updateCardStatus: function (boardId, cardId, statusId, callback) {
+        let data = {'boardId': boardId, 'cardId': cardId, 'statusId': statusId};
+        this._api_update('/update-card-status', data, callback);
     }
 };

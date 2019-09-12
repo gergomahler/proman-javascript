@@ -73,6 +73,16 @@ def update_board():
     return app.make_response('updated')
 
 
+@app.route("/update-card-status", methods=['UPDATE'])
+def update_card_status():
+    data = request.json
+    board_id = data['boardId']
+    card_id = data['cardId']
+    status_id = data['statusId']
+    data_handler.update_card_status_id(board_id, card_id, status_id)
+    return app.make_response('updated')
+
+
 def main():
     app.run(debug=True)
 

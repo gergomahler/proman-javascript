@@ -1,6 +1,7 @@
 // It uses data_handler.js to visualize elements
 import {dataHandler} from "./data_handler.js";
 
+let cardData = {};
 export let dom = {
     _appendToElement: function (elementToExtend, textToAppend, prepend = false) {
         // function to append new DOM elements (represented by a string) to an existing DOM element
@@ -88,40 +89,40 @@ export let dom = {
         let doneCards = '';
         for (let card of cards) {
             if (card.status_id === 'new') {
-                newCards += `<div class="card" draggable="true">
+                newCards += `<div class="card" draggable="true" data-card-id="${card.id}" data-board-id="${boardId}">
                              <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'in progress') {
-                inProgressCards += `<div class="card" draggable="true">
+                inProgressCards += `<div class="card" draggable="true" data-card-id="${card.id}" data-bosard-id="${boardId}">
                                     <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                                     <div class="card-title">${card.title}</div>
                                     </div>`
             } else if (card.status_id === 'testing') {
-                testingCards += `<div class="card" draggable="true">
+                testingCards += `<div class="card" draggable="true" data-card-id="${card.id}" data-board-id="${boardId}">
                              <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
             } else if (card.status_id === 'done') {
-                doneCards += `<div class="card" draggable="true">
+                doneCards += `<div class="card" draggable="true" data-card-id="${card.id}" data-board-id="${boardId}">
                              <div class="card-remove"><i data-card-id="${card.id}" class="fas fa-trash-alt"></i></div>
                              <div class="card-title">${card.title}</div>
                              </div>`
             }
         }
-        let newColumn = `<div class="board-column">
+        let newColumn = `<div class="board-column" data-status-id="0">
                                 <div class="board-column-title">New</div>
                                 <div class="board-column-content">${newCards}</div>
                          </div>`;
-        let inProgressColumn = `<div class="board-column">
+        let inProgressColumn = `<div class="board-column" data-status-id="1">
                                 <div class="board-column-title">In progress</div>
                                 <div class="board-column-content">${inProgressCards}</div>
                             </div>`;
-        let testingColumn = `<div class="board-column">
+        let testingColumn = `<div class="board-column" data-status-id="2">
                                 <div class="board-column-title">Testing</div>
                                 <div class="board-column-content">${testingCards}</div>
                             </div>`;
-        let doneColumn = `<div class="board-column">
+        let doneColumn = `<div class="board-column" data-status-id="3">
                                 <div class="board-column-title">Done</div>
                                 <div class="board-column-content">${doneCards}</div>
                             </div>`;
@@ -255,7 +256,11 @@ export let dom = {
         }
     },
 
-    dragStart: function (){
+    dragStart: function (event){
+        let boardId = event.target.dataset.boardId;
+        let cardId = event.target.dataset.cardId;
+        cardData.boardId = boardId;
+        cardData.cardId = cardId;
         this.className += ' held';
         setTimeout(() => (this.className = 'card-inactive'), 0);
     },
@@ -277,8 +282,12 @@ export let dom = {
         this.className = 'board-column';
     },
 
-    drop: function(card) {
+    drop: function(event, card) {
+        let statusId = event.target.dataset.statusId;
+        let boardId = cardData.boardId;
+        let cardId = cardData.cardId;
         this.append(card);
         this.className = 'board-column';
+        dataHandler.updateCardStatus(boardId, cardId, statusId, dom.loadBoards)
     },
 };
