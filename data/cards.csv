@@ -1,16 +1,26 @@
 id,board_id,title,status_id,order
-1,1,"new card 1",0,0
-2,1,"new card 2",0,1
-3,1,"in progress card",1,0
-4,1,"planning",2,0
-5,1,"done card 1",3,0
-6,1,"done card 1",3,1
-7,2,"new card 1",0,0
-8,2,"new card 2",0,1
-9,2,"in progress card",1,0
-10,2,"planning",2,0
-11,2,"done card 1",3,0
-12,2,"done card 1",3,1
-10,1,ert,0,2
-10,3,dfg,0,0
-10,1,ccc,0,3
+1,1,Rename board,0,0
+2,1,Create card,0,1
+3,1,Delete Board,0,2
+4,1,Delete Card,0,3
+5,1,Rename Column,0,4
+6,1,Edit Card Title,0,5
+7,1,Order,0,6
+12,2,Change status,1,0
+14,2,Rename board,3,0
+15,2,Create card,3,1
+16,2,Delete Board,3,2
+17,2,Delete Card,3,3
+18,2,Rename Column,1,1
+19,2,Edit Card Title,3,4
+20,2,Order,0,0
+21,4,SCRUM,0,0
+23,4,Teamwork,0,2
+24,4,Communication,0,3
+25,4,Pair programming,0,4
+26,5,Gitflow workflow,0,0
+27,5,Javascript,0,1
+28,5,Flask,0,2
+29,5,CSS,0,3
+30,3,using CSV,0,0
+31,3,understanding callbacks,0,1
