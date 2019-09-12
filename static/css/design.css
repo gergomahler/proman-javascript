@@ -1,19 +1,19 @@
 :root{
-    --border-radius: 3px;
-    --status-1: #590000;
-    --status-2: #594300;
-    --status-3: #525900;
-    --status-4: #085900;
+    --border-radius: 10px;
+    --status-1: coral;
+    --status-2: gold;
+    --status-3: papayawhip;
+    --status-4: limegreen;
 }
 
 body{
     min-width: 620px;
-    background: #ddd url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/diagonal-noise.png);
-    font-family: sans-serif;
+    background: #ddd url(http://cdn.backgroundhost.com/backgrounds/subtlepatterns/skelatal_weave.png);
+    font-family: 'Consolas', 'Deja Vu Sans Mono', 'Bitstream Vera Sans Mono', monospace;
 }
 
 h1, .board-title, .board-column-title{
-    font-weight: 100;
+    font-weight: 400;
 }
 
 h1{
@@ -30,6 +30,7 @@ button{
     font-size: 14px;
     font-family: sans-serif;
     padding: 4px 10px;
+    border-radius: 3px;
 }
 
 input{
@@ -38,8 +39,8 @@ input{
 }
 
 .board-container{
-max-width: 960px;
-margin: 0 auto;
+    max-width: 960px;
+    margin: 0 auto;
 }
 
 .addBoardBtn{
@@ -54,15 +55,15 @@ section.board{
 }
 
 .board-header{
-    height: 50px;
-    background: #fff;
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    height: 60px;
+    background: darkcyan;
+    border-radius: var(--border-radius) var(--border-radius) 5px 5px;
 }
 
 .board-title{
     margin: 13px;
     display: inline-block;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .board-title-hidden{
@@ -94,7 +95,7 @@ section.board{
 
 .board-column-content:empty{
     /*This only works if the tag is really empty and there is not even whitespace inside*/
-    border: 4px solid #cdcdcd;
+    border: 2px solid #cdcdcd;
     margin-top: 4px;
     border-radius: 10px;
     background: #eee;
@@ -128,10 +129,11 @@ section.board{
 .card{
     position: relative;
     background: #222;
-    color: #fff;
+    color: black;
     border-radius: var(--border-radius);
     margin: 4px 0;
     padding: 4px;
+    border: 1px solid grey;
 }
 
 .card-inactive {

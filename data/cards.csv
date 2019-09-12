@@ -14,13 +14,13 @@ id,board_id,title,status_id,order
 18,2,Rename Column,1,1
 19,2,Edit Card Title,3,4
 20,2,Order,0,0
-21,4,SCRUM,0,0
-23,4,Teamwork,0,2
-24,4,Communication,0,3
-25,4,Pair programming,0,4
-26,5,Gitflow workflow,0,0
-27,5,Javascript,0,1
-28,5,Flask,0,2
-29,5,CSS,0,3
+21,4,SCRUM,2,0
+23,4,Teamwork,3,2
+24,4,Communication,3,3
+25,4,Pair programming,3,4
+26,5,Gitflow workflow,3,0
+27,5,Javascript,2,1
+28,5,Flask,3,2
+29,5,CSS,3,3
 30,3,using CSV,0,0
 31,3,understanding callbacks,0,1
